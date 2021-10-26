@@ -7,12 +7,12 @@ const BASE_URL = "https://image.tmdb.org/t/p/w500";
 export default function MoviesList ({movies}){
     const location =useLocation();
     return(
-        <ul>
+        <ul className={s.moviesList}>
 {movies.map((movie)=>{
     return <li key={movie.id} className={s.movieItem}>
         <Link to={{pathname:`/movies/${movie.id}`, state: { from: location.pathname!=="/"?location.pathname+location.search:location.pathname}
 }}>
-        img src={`${BASE_URL}${movie.poster_path}`} alt="" width ="200"
+        <img src={`${BASE_URL}${movie.poster_path}`} alt=""/>
         </Link>
     </li>
 })}

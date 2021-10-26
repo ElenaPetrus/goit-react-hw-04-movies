@@ -1,6 +1,7 @@
 import MoviesList  from '../../components/MoviesList/MoviesList'
 import {useState, useEffect} from 'react'
-import getTrandingMovies from '../../services/apiService'
+import getTrandingMovies from '../../services/apiService';
+
 
 
 
@@ -30,8 +31,8 @@ useEffect(()=>{
 
     return (
         <>
-        <h1>Find the film</h1>
-        <MoviesList movies={[]}/>
+        <h1 >The most popular films for today</h1>
+        <MoviesList movies={movies}/>
         </>
     )
 }

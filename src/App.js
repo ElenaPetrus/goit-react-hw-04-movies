@@ -1,28 +1,29 @@
 import { Switch, Route, Redirect } from "react-router-dom";
-// import AppBar from "./components/AppBar/AppBar";
+import NavBar from "./components/Navigation/Navigation";
 // import Container from "./components/Container/Container";
 import HomePage from "./views/HomePage/HomePage";
 import MovieDetailsPage from "./views/MovieDetailsPage/MovieDetailsPage";
 import MoviesPage from "./views/MoviesPage/MoviesPage";
 // import BookDetailsView from "./views/BookDetailsView";
 // import NotFoundView from "./views/NotFoundView";
+import s from "./App.module.css";
 
 export default function App() {
   return (
-    <Switch>
-      <Route path="/" exact>
-        <HomePage />
-      </Route>
+    <div className={s.container}>
+      <NavBar />
+      <Switch>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+        <Route path="/movies" exact>
+          <MoviesPage />
+        </Route>
+        <Route path="/movies/:movieId">
+          <MovieDetailsPage />
+        </Route>
 
-      <Route path="/movies">
-        <MoviesPage />
-      </Route>
-
-      <Route path="/movies/:movieId">
-        <MovieDetailsPage />
-      </Route>
-
-      {/* <Route path="/movies/:movieId/cast">
+        {/* <Route path="/movies/:movieId/cast">
           <Cast />
         </Route>
 
@@ -30,9 +31,8 @@ export default function App() {
           <Reviews />
         </Route> */}
 
-      <Route>
         <Redirect from="*" to="/" />
-      </Route>
-    </Switch>
+      </Switch>
+    </div>
   );
 }

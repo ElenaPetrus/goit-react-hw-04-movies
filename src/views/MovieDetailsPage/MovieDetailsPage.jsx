@@ -3,32 +3,35 @@ import{useHistory, useLocation} from 'react-router-dom';
 import {fetchMovieDetails} from '../../services/apiService'
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
-const MovieDetailsPage =()=>{
-const [film, setFilm] =useState(null);
-const {movieId} =useParams()
-// console.log(movieId)
-const history=useHistory();
-const location=useLocation();
 
-const handleBack = () => {
+const MovieDetailsPage = () => {
+  const [film, setFilm] = useState(null);
+
+  const {movieId} = useParams();
+  const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    fetchMovieDetails(movieId).then((movie) => setFilm(movie));
+  }, [movieId]);
+  if (film === null) {
+    return <h1> no data available</h1>;
+  }
+
+  const handleBack = () => {
     history.push(location?.state?.from);
   };
 
+  return (
+    <div>
+      <button type="button" onClick={handleBack}>
+        Go back
+      </button>
+      <h1>{film.title}</h1>
+      <img src={`${BASE_URL}${film.backdrop_path}`} alt="" />
+      <p>{film.overview}</p>
+    </div>
+  );
+};
 
-useEffect(()=>{
-    fetchMovieDetails(movieId).then(movie=>setFilm(movie));
-},[movieId])
- if (film===null){
-     return <h1>no data for this film</h1>
- }
-    return (
-        <>
-        <button type="button" onClick={handleBack}>GO BACK</button>
-        <h1>{film.title}</h1>
-        <img srs={`${BASE_URL}${film.backdrop_path}`} alt=""/>
-        <p>{film.title}</p>
-        </>
-    );
-}
-
-export default MovieDetailsPage
+export default MovieDetailsPage;
