@@ -23,7 +23,8 @@ export default function Cast() {
           setActors(cast);
         })
         .catch(error => {
-          setError(`There is a arror ${error}`);
+          console.error('There is an arror with cast, error');
+          setError(error);
 
         });
     }, [movieId]);
