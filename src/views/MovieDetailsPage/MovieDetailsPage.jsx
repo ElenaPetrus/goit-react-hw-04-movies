@@ -1,35 +1,103 @@
-import {useState, useEffect, useParams} from 'react';
-import{useHistory, useLocation} from 'react-router-dom';
+import {useState, useEffect, lazy, Suspense} from 'react';
+import{useHistory, useLocation, useParams,  useRouteMatch, Route, NavLink} from 'react-router-dom';
+// import { toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import {fetchMovieDetails} from '../../services/apiService'
+import Loader from "../../components/Loader/Loader";
+import noimage from '../../assets/img/no_picture.jpg';
+// import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 
-const MovieDetailsPage = () => {
-  const [film, setFilm] = useState(null);
+const Cast = lazy(() =>
+  import('../Cast/Cast' /*webpackChungName: "cast"*/),
+);
+const Reviews = lazy(() =>
+  import('../Reviews/Reviews' /*webpackChungName: "reviews"*/),
+);
 
-  const {movieId} = useParams();
+const MovieDetailsPage = () => {
+  const [Film, setFilm] = useState(null);
+  // eslint-disable-next-line no-unused-vars
+  const [error, setError] = useState(null);
+  const { path } = useRouteMatch();
+  const { movieId } = useParams();
   const history = useHistory();
   const location = useLocation();
 
   useEffect(() => {
-    fetchMovieDetails(movieId).then((movie) => setFilm(movie));
+    fetchMovieDetails(movieId).then((movie) => setFilm(movie)).catch(error =>{
+      console.error('Problems with fetch movie details in api, error');
+      setError(error);
+  });
   }, [movieId]);
-  if (film === null) {
-    return <h1> no data available</h1>;
+  if (Film === null) {
+    return <h1> no details for this film</h1>;
   }
 
+
+
   const handleBack = () => {
-    history.push(location?.state?.from);
+    history.push(location?.state?.from ?? '/');
+
+    // if (location.state && location.state.from) {
+    //   history.push(location.state);
+    // }
+
+    // if (location?.state?.from === '/movies') {
+    //   history.push({
+    //     pathname: `location.state.from`,
+    //     search: `?query=${location.state.search}`,
+    //   });
+    // }
+
+    // if (
+    //   location.pathname === `/movies/${movieId}/reviews` ||
+    //   location.pathname === `/movies/${movieId}/cast`
+    // ) {
+    //   history.push(location.state.from);
+    // }
   };
 
   return (
     <div>
       <button type="button" onClick={handleBack}>
-        Go back
+      &#129044; Go back
       </button>
-      <h1>{film.title}</h1>
-      <img src={`${BASE_URL}${film.backdrop_path}`} alt="" />
-      <p>{film.overview}</p>
+      {Film && (
+        <>
+      <h1>{Film.title}</h1>
+      <img src={Film.backdrop_path
+        ?`${BASE_URL}${Film.backdrop_path}`
+        : noimage}
+         alt="" />
+      <p>{Film.tagline}</p>
+      
+      
+      <NavLink to={{ pathname: `/movies/${movieId}/cast`,
+                  state: {
+                    from: location,
+                    state: { from: location?.state?.from },
+                  },
+                }}>Cast</NavLink>
+    <NavLink to={{
+                  pathname: `/movies/${movieId}/reviews`,
+                  state: {
+                    from: location,
+                    state: { from: location?.state?.from },
+                  },
+                }}> Reviews </NavLink>
+
+              <Suspense fallback={<Loader />}>
+                <Route path={`${path}/cast`}>
+                  <Cast moveId={movieId} />
+                </Route>
+                <Route path={`${path}/reviews`}>
+                  <Reviews smoveId={movieId} />
+                </Route>
+              </Suspense>
+        </>
+      )}
     </div>
   );
 };

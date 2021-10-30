@@ -11,6 +11,7 @@ async function getTrandingMovies(page = 1) {
 
   return await response.data;
 }
+export default getTrandingMovies;
 
 export const fetchMovieDetails = async (movieId) => {
   const response = await axios.get(`movie/${movieId}?api_key=${API_KEY}`);
@@ -24,4 +25,9 @@ export const fetchMovie = async (query) => {
   return response.data.results;
 };
 
-export default getTrandingMovies;
+export const fetchMovieCast = async (movieId) => {
+  const response = await axios.get(
+    `movie/${movieId}/credits?api_key=${API_KEY}`
+  );
+  return response.data;
+};

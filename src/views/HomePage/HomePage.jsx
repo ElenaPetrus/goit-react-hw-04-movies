@@ -1,17 +1,28 @@
 import MoviesList  from '../../components/MoviesList/MoviesList'
 import {useState, useEffect} from 'react'
 import getTrandingMovies from '../../services/apiService';
-
+import Button from '../../components/Button/Button';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 
 
 const HomePage =()=>{
     const [movies, SetMovies] =useState([])
+    const [page, setPage] = useState(1);
+    const [error, setError] = useState(null);
 
 useEffect(()=>{
-    getTrandingMovies().then(films=>SetMovies(films.results))
+    getTrandingMovies(page).then(films=>SetMovies(films.results)).catch(error =>{
+        console.error('Problem with tranding movies in api, error');
+        setError(error);
+    })
 
-},[]);
+},[page]);
+
+const onLoadMore = () => {
+      setPage(page + 1);
+    };
+  
 
 // async function onFetchTrandingMovies() {
 //     try {
@@ -31,8 +42,9 @@ useEffect(()=>{
 
     return (
         <>
-        <h1 >The most popular films for today</h1>
-        <MoviesList movies={movies}/>
+        {movies.length > 0 ? 
+        <MoviesList movies={movies}/>  : <ErrorMessage message={error}/>}
+        {movies.length > 0 && <Button onLoadMore={onLoadMore} />}
         </>
     )
 }
