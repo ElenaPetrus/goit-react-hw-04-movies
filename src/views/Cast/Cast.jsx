@@ -44,7 +44,7 @@ export default function Cast() {
                   className={s.photo}
                 />
                 <h4 className={s.name}>{actor.original_name}</h4>
-               
+                <p className={s.character}>{actor.character}</p>
               </li>
             ))}
           </ul>

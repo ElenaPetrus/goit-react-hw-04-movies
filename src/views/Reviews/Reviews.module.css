@@ -1,0 +1,17 @@
+.author {
+  margin-bottom: 5px;
+  font-family: 'Bangers', sans-serif;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+  color: rgb(20, 89, 200);
+}
+
+.content {
+  text-align: justify;
+  font-family: 'Roboto';
+}
+.notReview {
+  text-align: center;
+  font-family: 'Roboto';
+  color: rgb(20, 89, 200);
+}

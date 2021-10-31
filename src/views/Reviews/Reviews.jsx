@@ -26,7 +26,7 @@ export default function Reviews() {
     }, [movieId]);
 
     if (reviews.length === 0) {
-      return <h3>There is any review for this movie.</h3>;
+      return <h3 className={s.notReview}>There is any review for this movie.</h3>;
     }
   
     return (
@@ -37,7 +37,7 @@ export default function Reviews() {
         <li key={review.id} className={s.item}>
             <div>
             <h3 className={s.author}>{review.author}</h3>
-            <p>{review.content}</p>
+            <p className={s.content}>{review.content}</p>
             </div>
         </li>
             );

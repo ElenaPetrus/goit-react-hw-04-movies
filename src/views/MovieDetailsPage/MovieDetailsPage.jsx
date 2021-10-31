@@ -48,30 +48,36 @@ const MovieDetailsPage = () => {
       <button className={s.btn} type="button" onClick={handleBack}>
       <span className={s.btnText}>  &#129044; Go back </span>
       </button>
+
       {Film && (
         <>
-      <h1>{Film.title}</h1>
+        <div className={s.filmCard}>
       <img src={Film.backdrop_path
         ?`${BASE_URL}${Film.backdrop_path}`
         : noimage}
          alt="" />
-      <p>{Film.tagline}</p>
-      
-      
-      <NavLink to={{ pathname: `/movies/${movieId}/cast`,
+         <div className={s.details}>
+         <h2 className={s.filmTitle}>{Film.title}</h2>
+          <p className={s.info}>{Film.tagline}</p>
+          <p className={s.info}>{Film.score}</p>
+          <NavLink to={{ pathname: `/movies/${movieId}/cast`,
                   state: {
                     from: location,
                     state: { from: location?.state?.from },
                   },
-                }}>Cast</NavLink>
+                }} className={s.castTitle}>Cast</NavLink>
     <NavLink to={{
                   pathname: `/movies/${movieId}/reviews`,
                   state: {
                     from: location,
                     state: { from: location?.state?.from  },
                   },
-                }}> Reviews </NavLink>
-
+                }} className={s.reviewTitle}> Reviews </NavLink>
+         </div>
+         </div>
+     
+      
+  
               <Suspense fallback={<Loader />}>
                 <Route path={`${path}/cast`}>
                   <Cast moveId={movieId} />
