@@ -6,6 +6,7 @@ import { fetchMovie } from '../../services/apiService';
 import MoviesList from '../../components/MoviesList/MoviesList'
 import Button from '../../components/Button/Button';
 // import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import s from './MoviePage.module.css';
 
 const MoviesPage = () => {
   const [query, setQuery] = useState("");
@@ -66,13 +67,12 @@ const MoviesPage = () => {
 
 
  
- 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input onChange={handleChange} name="query" value={query} />
-        <button type="submit" className='button'>
-            <span className="label">Click to find</span>
+      <form className={s.form} onSubmit={handleSubmit} >
+        <input  className={s.input} onChange={handleChange} name="query" value={query} />
+        <button type="submit" className={s.btn}>
+            <span className={s.label}>Click to find</span>
           </button>
       </form>
       <>

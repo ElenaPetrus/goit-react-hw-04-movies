@@ -6,6 +6,7 @@ import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 
 
+
 const HomePage =()=>{
     const [movies, SetMovies] =useState([])
     const [page, setPage] = useState(1);

@@ -6,6 +6,7 @@ import {fetchMovieDetails} from '../../services/apiService'
 import Loader from "../../components/Loader/Loader";
 import noimage from '../../assets/img/no_picture.jpg';
 // import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
+import s from './MovieDetails.module.css';
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 
@@ -40,29 +41,12 @@ const MovieDetailsPage = () => {
   const handleBack = () => {
     history.push(location?.state?.from ?? '/');
 
-    // if (location.state && location.state.from) {
-    //   history.push(location.state);
-    // }
-
-    // if (location?.state?.from === '/movies') {
-    //   history.push({
-    //     pathname: `location.state.from`,
-    //     search: `?query=${location.state.search}`,
-    //   });
-    // }
-
-    // if (
-    //   location.pathname === `/movies/${movieId}/reviews` ||
-    //   location.pathname === `/movies/${movieId}/cast`
-    // ) {
-    //   history.push(location.state.from);
-    // }
   };
 
   return (
     <div>
-      <button type="button" onClick={handleBack}>
-      &#129044; Go back
+      <button className={s.btn} type="button" onClick={handleBack}>
+      <span className={s.btnText}>  &#129044; Go back </span>
       </button>
       {Film && (
         <>
@@ -84,7 +68,7 @@ const MovieDetailsPage = () => {
                   pathname: `/movies/${movieId}/reviews`,
                   state: {
                     from: location,
-                    state: { from: location?.state?.from },
+                    state: { from: location?.state?.from  },
                   },
                 }}> Reviews </NavLink>
 

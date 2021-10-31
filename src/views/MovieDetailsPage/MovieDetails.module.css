@@ -1,0 +1,17 @@
+.btn {
+  height: 46px;
+  padding: 5px 10px;
+  background-color: rgb(253, 253, 253);
+  border-color: rgba(109, 93, 101, 0.219);
+  color: rgb(20, 89, 200);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  opacity: 1;
+  transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.btnText {
+  color: rgb(20, 89, 200);
+  font-weight: 500;
+  font-size: 16px;
+}
