@@ -37,9 +37,15 @@ const MovieDetailsPage = () => {
   }
 
 
-
   const handleBack = () => {
     history.push(location?.state?.from ?? '/');
+
+    if (location?.state?.from === '/movies') {
+      history.push({
+        pathname: location.state.from,
+        search: `?query=${location.state.search}`,
+      });
+    }
 
   };
 
@@ -60,17 +66,18 @@ const MovieDetailsPage = () => {
          <h2 className={s.filmTitle}>{Film.title}</h2>
           <p className={s.info}>{Film.tagline}</p>
           <p className={s.info}>{Film.score}</p>
-          <NavLink to={{ pathname: `/movies/${movieId}/cast`,
+          <NavLink to={{
+                  pathname: `/movies/${movieId}/cast`,
                   state: {
-                    from: location,
-                    state: { from: location?.state?.from },
+                    from: location?.state?.from,
+                    search: location.state.search,
                   },
                 }} className={s.castTitle}>Cast</NavLink>
     <NavLink to={{
                   pathname: `/movies/${movieId}/reviews`,
                   state: {
-                    from: location,
-                    state: { from: location?.state?.from  },
+                    from: location?.state?.from,
+                    search: location.state.search,
                   },
                 }} className={s.reviewTitle}> Reviews </NavLink>
          </div>
